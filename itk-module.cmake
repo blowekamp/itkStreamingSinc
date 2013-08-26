@@ -14,6 +14,7 @@ itk_module(StreamingSinc
     ITKCommon
     ITKImageFilterBase
     ITKStatistics
+    ITKImageStatistics
   TEST_DEPENDS
     ITKTestKernel
     ITKStatistics
