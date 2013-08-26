@@ -4,7 +4,7 @@
 #changed when this module is renamed.
 
 set(${itk-module}_SRC
-itkStreamingProcessObject.cxx
+  itkStreamingProcessObject.cxx
 )
 
 add_library(${itk-module} ${${itk-module}_SRC})
