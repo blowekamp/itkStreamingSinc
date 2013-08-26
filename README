@@ -6,55 +6,7 @@ Registration. It is designed to work with the ITKv4
 modular system and  to be places it ITK/Modules/External or uses as a
 Remote module.
 
-This modular is empty it is just a template to be used as a starting
-point for a module with acutal content.
-
-Getting Started
-===============
-
-The official ITKv4 Wiki documentation on adding an external module is here:
-http://www.itk.org/Wiki/ITK_Release_4/Modularization/Add_an_external_module_(external_module)
-http://www.itk.org/Wiki/ITK/Policy_and_Procedures_for_Adding_Remote_Modules
-
-
-External Module
----------------
-
-The following is a breif list of instructions to get a external module
-started in a repository:
-
-mkdir ITK/Modules/External/itkMyModule
-cd ITK/Modules/External/itkMyModule
-git init
-git fetch git@github.com:blowekamp/itkExternalTemplate.git
-git merge FETCH_HEAD
-
-Remote Module
--------------
-
-After a module has been created as a git repository it can be included
-as a remote module, which enables automatic fetching. Add a file in
-"ITK/Modules/Remote" called "YourModule.remote.cmake", for this module
-it would be "ExternalExample.remote.cmake" with the followlowing contents:
-
-itk_fetch_module(ExternalExample
-  "A template for a module."
-  GIT_REPOSITORY http://github.com/blowekamp/itkExternalTemplate.git
-  GIT_TAG master
-  )
-
-Editing
--------
-
-The CMakeLists.txt and itk-modules need to be modified with the name
-of the module, something along the following:
-
-sed 's/ExternalTemplate/MyModule/g' CMakeLists.txt itk-module.cmake
-
-There is the inplace option to sed, but it's not portable, so do this
-change by hand or look up the option in sed.
-
-Then hack away at you code in include, src, and tests.
+This module is for a set of streaming sinc classes to process data out-of-core.
 
 License
 =======
@@ -65,6 +17,5 @@ LICENSE for details.
 
 Author
 ======
-
 
 Bradley Lowekamp
