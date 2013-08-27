@@ -5,12 +5,10 @@ itk_module_test()
 
 set(ITK${itk-module}Tests
   itkStreamingLabelStatisticsImageFilterTest.cxx
+  itkBoundingRegionImageSincTest.cxx
 )
 
 CreateTestDriver(${itk-module} "${${itk-module}-Test_LIBRARIES}" "${ITK${itk-module}Tests}")
-
-itk_add_test(NAME itkDeleteMeEmptyTest
-  COMMAND ${itk-module}TestDriver itkEmptyTest "argument1" "..." )
 
 
 itk_add_test( NAME itkStreamingLabelStatisticsImageFilterTest1
@@ -24,3 +22,19 @@ itk_add_test( NAME itkStreamingLabelStatisticsImageFilterTest3
  DATA{${ITK_DATA_ROOT}/Input/peppers.png} DATA{${ITK_DATA_ROOT}/Baseline/Algorithms/OtsuMultipleThresholdsImageFilterTest.png} 20)
 
 #PASS_REGULAR_EXPRESSION
+
+itk_add_test(NAME itkBoundingRegionImageSincTest1
+  COMMAND ${itk-module}TestDriver --without-threads itkBoundingRegionImageSincTest
+  DATA{${ITK_DATA_ROOT}/Input/circle.png} 64 )
+itk_add_test(NAME itkBoundingRegionImageSincTest2
+  COMMAND ${itk-module}TestDriver --with-threads 64 itkBoundingRegionImageSincTest
+  DATA{${ITK_DATA_ROOT}/Input/circle.png} 1 )
+itk_add_test(NAME itkBoundingRegionImageSincTest3
+  COMMAND ${itk-module}TestDriver --with-threads 64 itkBoundingRegionImageSincTest
+  DATA{${ITK_DATA_ROOT}/Input/circle.png} 100 )
+set_tests_properties (itkBoundingRegionImageSincTest1
+    itkBoundingRegionImageSincTest2
+    itkBoundingRegionImageSincTest3
+  PROPERTIES
+    PASS_REGULAR_EXPRESSION "Region: \\[29, 29\\] \\[87, 87\\]")
+
