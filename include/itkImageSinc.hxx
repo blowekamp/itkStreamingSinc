@@ -148,9 +148,8 @@ ImageSinc<TInputImage>
 template <class TInputImage>
 void
 ImageSinc<TInputImage>
-::StreamedGenerateData( unsigned int inputRequestedRegionNumber)
+::StreamedGenerateData( unsigned int itkNotUsed(inputRequestedRegionNumber) )
 {
-  itkNotUsed(inputRequestedRegionNumber);
   // Set up the multithreaded processing
   ThreadStruct str;
   str.Filter = this;
