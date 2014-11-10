@@ -100,7 +100,7 @@ void StreamingProcessObject::GenerateData( void )
   this->AfterStreamedGenerateData();
 }
 
-void StreamingProcessObject::UpdateOutputData(DataObject *output)
+void StreamingProcessObject::UpdateOutputData(DataObject *itkNotUsed(output))
 {
 
   unsigned int idx;
