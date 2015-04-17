@@ -18,7 +18,7 @@
 #ifndef itkStreamingStatisticsImageFilter_h
 #define itkStreamingStatisticsImageFilter_h
 
-#include "itkImageToImageFilter.h"
+#include "itkImageSinc.h"
 #include "itkNumericTraits.h"
 #include "itkArray.h"
 #include "itkSimpleDataObjectDecorator.h"
@@ -80,6 +80,10 @@ public:
   /** Type of DataObjects used for scalar outputs */
   typedef SimpleDataObjectDecorator< RealType >  RealObjectType;
   typedef SimpleDataObjectDecorator< PixelType > PixelObjectType;
+
+  // Change the acces from protected to public
+  using Superclass::SetNumberOfStreamDivisions;
+  using Superclass::GetNumberOfStreamDivisions;
 
   /** Return the computed Minimum. */
   PixelType GetMinimum() const
