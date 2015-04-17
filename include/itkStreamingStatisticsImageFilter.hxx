@@ -282,9 +282,17 @@ StreamingStatisticsImageFilter< TInputImage >
 
   ImageScanlineConstIterator< TInputImage > it (this->GetInput(), inputRegion);
 
+  int currentIterationNumber = this->GetCurrentRequestNumber();
+  int numberOfIterations = this->GetNumberOfInputRequestedRegions();
+
   // support progress methods/callbacks
   const size_t numberOfLinesToProcess =inputRegion.GetNumberOfPixels() / size0;
-  ProgressReporter progress( this, threadId, numberOfLinesToProcess );
+  ProgressReporter progress( this, threadId,
+                             numberOfLinesToProcess,
+                             100,
+                             float( currentIterationNumber ) / numberOfIterations,
+                             1.0 / numberOfIterations
+    );
 
   // do the work
   while ( !it.IsAtEnd() )
