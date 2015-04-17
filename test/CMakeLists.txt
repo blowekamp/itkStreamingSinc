@@ -6,6 +6,7 @@ itk_module_test()
 set(ITK${itk-module}Tests
   itkStreamingLabelStatisticsImageFilterTest.cxx
   itkStreamingStatisticsImageFilterTest.cxx
+  itkStreamingStatisticsImageFilterTest2.cxx
   itkBoundingRegionImageSincTest.cxx
 )
 
@@ -21,8 +22,18 @@ itk_add_test( NAME itkStreamingLabelStatisticsImageFilterTest2
 itk_add_test( NAME itkStreamingLabelStatisticsImageFilterTest3
   COMMAND ${itk-module}TestDriver itkStreamingLabelStatisticsImageFilterTest
  DATA{${ITK_DATA_ROOT}/Input/peppers.png} DATA{${ITK_DATA_ROOT}/Baseline/Algorithms/OtsuMultipleThresholdsImageFilterTest.png} 20)
+
 itk_add_test(NAME itkStreamingStatisticsImageFilterTest
       COMMAND ITKImageStatisticsTestDriver itkStatisticsImageFilterTest)
+itk_add_test( NAME itkStreamingStatisticsImageFilterTest2_1
+  COMMAND ${itk-module}TestDriver itkStreamingStatisticsImageFilterTest2
+  DATA{${ITK_DATA_ROOT}/Input/peppers.png}  1)
+itk_add_test( NAME itkStreamingStatisticsImageFilterTest2_2
+  COMMAND ${itk-module}TestDriver itkStreamingStatisticsImageFilterTest2
+  DATA{${ITK_DATA_ROOT}/Input/peppers.png} 10)
+itk_add_test( NAME itkStreamingStatisticsImageFilterTest2_3
+  COMMAND ${itk-module}TestDriver itkStreamingStatisticsImageFilterTest2
+ DATA{${ITK_DATA_ROOT}/Input/peppers.png} 20)
 
 #PASS_REGULAR_EXPRESSION
 
