@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef itkStatisticsImageFilter_h
-#define itkStatisticsImageFilter_h
+#ifndef itkStreamingStatisticsImageFilter_h
+#define itkStreamingStatisticsImageFilter_h
 
 #include "itkImageToImageFilter.h"
 #include "itkNumericTraits.h"
@@ -25,10 +25,10 @@
 
 namespace itk
 {
-/** \class StatisticsImageFilter
+/** \class StreamingStatisticsImageFilter
  * \brief Compute min. max, variance and mean of an Image.
  *
- * StatisticsImageFilter computes the minimum, maximum, sum, mean, variance
+ * StreamingStatisticsImageFilter computes the minimum, maximum, sum, mean, variance
  * sigma of an image.  The filter needs all of its input image.  It
  * behaves as a filter with an input and output. Thus it can be inserted
  * in a pipline with other filters and the statistics will only be
@@ -38,26 +38,26 @@ namespace itk
  * threaded. It computes statistics in each thread then combines them in
  * its AfterThreadedGenerate method.
  *
- * \ingroup MathematicalStatisticsImageFilters
+ * \ingroup MathematicalStreamingStatisticsImageFilters
  *
  * \ingroup StreamingSinc
  */
 template< typename TInputImage >
-class StatisticsImageFilter:
-  public ImageToImageFilter< TInputImage, TInputImage >
+class StreamingStatisticsImageFilter:
+    public ImageSinc< TInputImage >
 {
 public:
   /** Standard Self typedef */
-  typedef StatisticsImageFilter                          Self;
-  typedef ImageToImageFilter< TInputImage, TInputImage > Superclass;
-  typedef SmartPointer< Self >                           Pointer;
-  typedef SmartPointer< const Self >                     ConstPointer;
+  typedef StreamingStatisticsImageFilter Self;
+  typedef ImageSinc< TInputImage >       Superclass;
+  typedef SmartPointer< Self >           Pointer;
+  typedef SmartPointer< const Self >     ConstPointer;
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
 
   /** Runtime information support. */
-  itkTypeMacro(StatisticsImageFilter, ImageToImageFilter);
+  itkTypeMacro(StreamingStatisticsImageFilter, ImageSinc);
 
   /** Image related typedefs. */
   typedef typename TInputImage::Pointer InputImagePointer;
@@ -137,35 +137,23 @@ public:
 #endif
 
 protected:
-  StatisticsImageFilter();
-  ~StatisticsImageFilter(){}
+  StreamingStatisticsImageFilter();
+  ~StreamingStatisticsImageFilter(){}
   void PrintSelf(std::ostream & os, Indent indent) const ITK_OVERRIDE;
 
-  /** Pass the input through unmodified. Do this by Grafting in the
-   *  AllocateOutputs method.
-   */
-  void AllocateOutputs() ITK_OVERRIDE;
-
   /** Initialize some accumulators before the threads run. */
-  void BeforeThreadedGenerateData() ITK_OVERRIDE;
+  void BeforeStreamedGenerateData() ITK_OVERRIDE;
 
   /** Do final mean and variance computation from data accumulated in threads.
    */
-  void AfterThreadedGenerateData() ITK_OVERRIDE;
+  void AfterStreamedGenerateData() ITK_OVERRIDE;
 
   /** Multi-thread version GenerateData. */
-  void  ThreadedGenerateData(const RegionType &
-                             outputRegionForThread,
-                             ThreadIdType threadId) ITK_OVERRIDE;
+  void  ThreadedStreamedGenerateData(const RegionType &inputRegion, ThreadIdType threadId) ITK_OVERRIDE;
 
-  // Override since the filter needs all the data for the algorithm
-  void GenerateInputRequestedRegion() ITK_OVERRIDE;
-
-  // Override since the filter produces all of its output
-  void EnlargeOutputRequestedRegion(DataObject *data) ITK_OVERRIDE;
 
 private:
-  StatisticsImageFilter(const Self &); //purposely not implemented
+  StreamingStatisticsImageFilter(const Self &); //purposely not implemented
   void operator=(const Self &);        //purposely not implemented
 
   Array< RealType >       m_ThreadSum;
@@ -177,7 +165,7 @@ private:
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkStatisticsImageFilter.hxx"
+#include "itkStreamingStatisticsImageFilter.hxx"
 #endif
 
 #endif

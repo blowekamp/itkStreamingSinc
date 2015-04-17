@@ -15,9 +15,9 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef itkStatisticsImageFilter_hxx
-#define itkStatisticsImageFilter_hxx
-#include "itkStatisticsImageFilter.h"
+#ifndef itkStreamingStatisticsImageFilter_hxx
+#define itkStreamingStatisticsImageFilter_hxx
+#include "itkStreamingStatisticsImageFilter.h"
 
 
 #include "itkImageScanlineIterator.h"
@@ -26,8 +26,8 @@
 namespace itk
 {
 template< typename TInputImage >
-StatisticsImageFilter< TInputImage >
-::StatisticsImageFilter():m_ThreadSum(1), m_SumOfSquares(1), m_Count(1), m_ThreadMin(1), m_ThreadMax(1)
+StreamingStatisticsImageFilter< TInputImage >
+::StreamingStatisticsImageFilter():m_ThreadSum(1), m_SumOfSquares(1), m_Count(1), m_ThreadMin(1), m_ThreadMax(1)
 {
   // first output is a copy of the image, DataObject created by
   // superclass
@@ -59,7 +59,7 @@ StatisticsImageFilter< TInputImage >
 
 template< typename TInputImage >
 DataObject::Pointer
-StatisticsImageFilter< TInputImage >
+StreamingStatisticsImageFilter< TInputImage >
 ::MakeOutput(DataObjectPointerArraySizeType output)
 {
   switch ( output )
@@ -87,96 +87,96 @@ StatisticsImageFilter< TInputImage >
 }
 
 template< typename TInputImage >
-typename StatisticsImageFilter< TInputImage >::PixelObjectType *
-StatisticsImageFilter< TInputImage >
+typename StreamingStatisticsImageFilter< TInputImage >::PixelObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetMinimumOutput()
 {
   return static_cast< PixelObjectType * >( this->ProcessObject::GetOutput(1) );
 }
 
 template< typename TInputImage >
-const typename StatisticsImageFilter< TInputImage >::PixelObjectType *
-StatisticsImageFilter< TInputImage >
+const typename StreamingStatisticsImageFilter< TInputImage >::PixelObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetMinimumOutput() const
 {
   return static_cast< const PixelObjectType * >( this->ProcessObject::GetOutput(1) );
 }
 
 template< typename TInputImage >
-typename StatisticsImageFilter< TInputImage >::PixelObjectType *
-StatisticsImageFilter< TInputImage >
+typename StreamingStatisticsImageFilter< TInputImage >::PixelObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetMaximumOutput()
 {
   return static_cast< PixelObjectType * >( this->ProcessObject::GetOutput(2) );
 }
 
 template< typename TInputImage >
-const typename StatisticsImageFilter< TInputImage >::PixelObjectType *
-StatisticsImageFilter< TInputImage >
+const typename StreamingStatisticsImageFilter< TInputImage >::PixelObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetMaximumOutput() const
 {
   return static_cast< const PixelObjectType * >( this->ProcessObject::GetOutput(2) );
 }
 
 template< typename TInputImage >
-typename StatisticsImageFilter< TInputImage >::RealObjectType *
-StatisticsImageFilter< TInputImage >
+typename StreamingStatisticsImageFilter< TInputImage >::RealObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetMeanOutput()
 {
   return static_cast< RealObjectType * >( this->ProcessObject::GetOutput(3) );
 }
 
 template< typename TInputImage >
-const typename StatisticsImageFilter< TInputImage >::RealObjectType *
-StatisticsImageFilter< TInputImage >
+const typename StreamingStatisticsImageFilter< TInputImage >::RealObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetMeanOutput() const
 {
   return static_cast< const RealObjectType * >( this->ProcessObject::GetOutput(3) );
 }
 
 template< typename TInputImage >
-typename StatisticsImageFilter< TInputImage >::RealObjectType *
-StatisticsImageFilter< TInputImage >
+typename StreamingStatisticsImageFilter< TInputImage >::RealObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetSigmaOutput()
 {
   return static_cast< RealObjectType * >( this->ProcessObject::GetOutput(4) );
 }
 
 template< typename TInputImage >
-const typename StatisticsImageFilter< TInputImage >::RealObjectType *
-StatisticsImageFilter< TInputImage >
+const typename StreamingStatisticsImageFilter< TInputImage >::RealObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetSigmaOutput() const
 {
   return static_cast< const RealObjectType * >( this->ProcessObject::GetOutput(4) );
 }
 
 template< typename TInputImage >
-typename StatisticsImageFilter< TInputImage >::RealObjectType *
-StatisticsImageFilter< TInputImage >
+typename StreamingStatisticsImageFilter< TInputImage >::RealObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetVarianceOutput()
 {
   return static_cast< RealObjectType * >( this->ProcessObject::GetOutput(5) );
 }
 
 template< typename TInputImage >
-const typename StatisticsImageFilter< TInputImage >::RealObjectType *
-StatisticsImageFilter< TInputImage >
+const typename StreamingStatisticsImageFilter< TInputImage >::RealObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetVarianceOutput() const
 {
   return static_cast< const RealObjectType * >( this->ProcessObject::GetOutput(5) );
 }
 
 template< typename TInputImage >
-typename StatisticsImageFilter< TInputImage >::RealObjectType *
-StatisticsImageFilter< TInputImage >
+typename StreamingStatisticsImageFilter< TInputImage >::RealObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetSumOutput()
 {
   return static_cast< RealObjectType * >( this->ProcessObject::GetOutput(6) );
 }
 
 template< typename TInputImage >
-const typename StatisticsImageFilter< TInputImage >::RealObjectType *
-StatisticsImageFilter< TInputImage >
+const typename StreamingStatisticsImageFilter< TInputImage >::RealObjectType *
+StreamingStatisticsImageFilter< TInputImage >
 ::GetSumOutput() const
 {
   return static_cast< const RealObjectType * >( this->ProcessObject::GetOutput(6) );
@@ -184,45 +184,8 @@ StatisticsImageFilter< TInputImage >
 
 template< typename TInputImage >
 void
-StatisticsImageFilter< TInputImage >
-::GenerateInputRequestedRegion()
-{
-  Superclass::GenerateInputRequestedRegion();
-  if ( this->GetInput() )
-    {
-    InputImagePointer image =
-      const_cast< typename Superclass::InputImageType * >( this->GetInput() );
-    image->SetRequestedRegionToLargestPossibleRegion();
-    }
-}
-
-template< typename TInputImage >
-void
-StatisticsImageFilter< TInputImage >
-::EnlargeOutputRequestedRegion(DataObject *data)
-{
-  Superclass::EnlargeOutputRequestedRegion(data);
-  data->SetRequestedRegionToLargestPossibleRegion();
-}
-
-template< typename TInputImage >
-void
-StatisticsImageFilter< TInputImage >
-::AllocateOutputs()
-{
-  // Pass the input through as the output
-  InputImagePointer image =
-    const_cast< TInputImage * >( this->GetInput() );
-
-  this->GraftOutput(image);
-
-  // Nothing that needs to be allocated for the remaining outputs
-}
-
-template< typename TInputImage >
-void
-StatisticsImageFilter< TInputImage >
-::BeforeThreadedGenerateData()
+StreamingStatisticsImageFilter< TInputImage >
+::BeforeStreamedGenerateData()
 {
   ThreadIdType numberOfThreads = this->GetNumberOfThreads();
 
@@ -243,8 +206,8 @@ StatisticsImageFilter< TInputImage >
 
 template< typename TInputImage >
 void
-StatisticsImageFilter< TInputImage >
-::AfterThreadedGenerateData()
+StreamingStatisticsImageFilter< TInputImage >
+::AfterStreamedGenerateData()
 {
   ThreadIdType    i;
   SizeValueType   count;
@@ -300,11 +263,10 @@ StatisticsImageFilter< TInputImage >
 
 template< typename TInputImage >
 void
-StatisticsImageFilter< TInputImage >
-::ThreadedGenerateData(const RegionType & outputRegionForThread,
-                       ThreadIdType threadId)
+StreamingStatisticsImageFilter< TInputImage >
+::ThreadedStreamedGenerateData(const RegionType & inputRegion, ThreadIdType threadId)
 {
-  const SizeValueType size0 = outputRegionForThread.GetSize(0);
+  const SizeValueType size0 =inputRegion.GetSize(0);
   if( size0 == 0)
     {
     return;
@@ -318,10 +280,10 @@ StatisticsImageFilter< TInputImage >
   PixelType min = NumericTraits< PixelType >::max();
   PixelType max = NumericTraits< PixelType >::NonpositiveMin();
 
-  ImageScanlineConstIterator< TInputImage > it (this->GetInput(),  outputRegionForThread);
+  ImageScanlineConstIterator< TInputImage > it (this->GetInput(), inputRegion);
 
   // support progress methods/callbacks
-  const size_t numberOfLinesToProcess = outputRegionForThread.GetNumberOfPixels() / size0;
+  const size_t numberOfLinesToProcess =inputRegion.GetNumberOfPixels() / size0;
   ProgressReporter progress( this, threadId, numberOfLinesToProcess );
 
   // do the work
@@ -358,7 +320,7 @@ StatisticsImageFilter< TInputImage >
 
 template< typename TImage >
 void
-StatisticsImageFilter< TImage >
+StreamingStatisticsImageFilter< TImage >
 ::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
