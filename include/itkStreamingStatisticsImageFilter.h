@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkStatisticsImageFilter_h
-#define __itkStatisticsImageFilter_h
+#ifndef itkStatisticsImageFilter_h
+#define itkStatisticsImageFilter_h
 
 #include "itkImageToImageFilter.h"
 #include "itkNumericTraits.h"
@@ -39,11 +39,8 @@ namespace itk
  * its AfterThreadedGenerate method.
  *
  * \ingroup MathematicalStatisticsImageFilters
- * \ingroup ITKImageStatistics
  *
- * \wiki
- * \wikiexample{Statistics/StatisticsImageFilter,Compute min\, max\, variance and mean of an Image.}
- * \endwiki
+ * \ingroup StreamingSinc
  */
 template< typename TInputImage >
 class StatisticsImageFilter:
@@ -130,7 +127,7 @@ public:
    * output. */
   typedef ProcessObject::DataObjectPointerArraySizeType DataObjectPointerArraySizeType;
   using Superclass::MakeOutput;
-  virtual DataObjectPointer MakeOutput(DataObjectPointerArraySizeType idx);
+  virtual DataObjectPointer MakeOutput(DataObjectPointerArraySizeType idx) ITK_OVERRIDE;
 
 #ifdef ITK_USE_CONCEPT_CHECKING
   // Begin concept checking
@@ -142,30 +139,30 @@ public:
 protected:
   StatisticsImageFilter();
   ~StatisticsImageFilter(){}
-  void PrintSelf(std::ostream & os, Indent indent) const;
+  void PrintSelf(std::ostream & os, Indent indent) const ITK_OVERRIDE;
 
   /** Pass the input through unmodified. Do this by Grafting in the
    *  AllocateOutputs method.
    */
-  void AllocateOutputs();
+  void AllocateOutputs() ITK_OVERRIDE;
 
   /** Initialize some accumulators before the threads run. */
-  void BeforeThreadedGenerateData();
+  void BeforeThreadedGenerateData() ITK_OVERRIDE;
 
   /** Do final mean and variance computation from data accumulated in threads.
    */
-  void AfterThreadedGenerateData();
+  void AfterThreadedGenerateData() ITK_OVERRIDE;
 
   /** Multi-thread version GenerateData. */
   void  ThreadedGenerateData(const RegionType &
                              outputRegionForThread,
-                             ThreadIdType threadId);
+                             ThreadIdType threadId) ITK_OVERRIDE;
 
   // Override since the filter needs all the data for the algorithm
-  void GenerateInputRequestedRegion();
+  void GenerateInputRequestedRegion() ITK_OVERRIDE;
 
   // Override since the filter produces all of its output
-  void EnlargeOutputRequestedRegion(DataObject *data);
+  void EnlargeOutputRequestedRegion(DataObject *data) ITK_OVERRIDE;
 
 private:
   StatisticsImageFilter(const Self &); //purposely not implemented
