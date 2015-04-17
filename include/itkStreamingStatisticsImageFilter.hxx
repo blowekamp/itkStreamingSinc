@@ -311,11 +311,12 @@ StreamingStatisticsImageFilter< TInputImage >
     progress.CompletedPixel();
     }
 
-  m_ThreadSum[threadId] = sum;
-  m_SumOfSquares[threadId] = sumOfSquares;
-  m_Count[threadId] = count;
-  m_ThreadMin[threadId] = min;
-  m_ThreadMax[threadId] = max;
+  // merge this chunk with the others for this thread
+  m_ThreadSum[threadId] += sum;
+  m_SumOfSquares[threadId] += sumOfSquares;
+  m_Count[threadId] += count;
+  m_ThreadMin[threadId] = std::min(min, m_ThreadMin[threadId]);
+  m_ThreadMax[threadId] = std::max(max, m_ThreadMax[threadId]);
 }
 
 template< typename TImage >
