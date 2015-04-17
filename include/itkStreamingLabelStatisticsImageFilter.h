@@ -53,7 +53,7 @@ namespace itk
  * its AfterThreadedGenerate method.
  *
  * \ingroup MathematicalStatisticsImageFilters
- * \ingroup ITK-ImageStatistics
+ * \ingroup StreamingSinc
  */
 template< class TInputImage, class TLabelImage >
 class StreamingLabelStatisticsImageFilter:

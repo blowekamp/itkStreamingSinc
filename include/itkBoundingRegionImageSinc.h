@@ -27,6 +27,10 @@
 namespace itk
 {
 
+/** \class BoundingRegionImageSinc
+ *
+ * \ingroup StreamingSinc
+ **/
 template< class TInputImage >
 class BoundingRegionImageSinc
   : public ImageSinc<TInputImage>

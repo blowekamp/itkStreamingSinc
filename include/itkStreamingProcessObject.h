@@ -26,7 +26,7 @@ namespace itk
 /** \class Add the methods needed to generically iterate on the input
  * requested region to stream data.
  *
- * \todo document me
+ * \ingroup StreamingSinc
  */
 class StreamingProcessObject
   : public ProcessObject

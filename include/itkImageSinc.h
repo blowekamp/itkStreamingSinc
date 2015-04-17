@@ -28,7 +28,7 @@ namespace itk
 
 /** \class ImageSink
 *
-*
+* \ingroup StreamingSinc
 **/
 template <class TInputImage >
 class ImageSinc
