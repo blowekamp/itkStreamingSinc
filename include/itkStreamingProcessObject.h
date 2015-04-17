@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkStreamingProcessObject_h
-#define __itkStreamingProcessObject_h
+#ifndef itkStreamingProcessObject_h
+#define itkStreamingProcessObject_h
 
 #include "itkProcessObject.h"
 
@@ -80,4 +80,4 @@ private:
 
 } // end namespace itk
 
-#endif //__itkStreamingProcessObject_h
+#endif //itkStreamingProcessObject_h

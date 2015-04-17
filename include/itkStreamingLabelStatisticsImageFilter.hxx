@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkStreamingLabelStatisticsImageFilter_hxx
-#define __itkStreamingLabelStatisticsImageFilter_hxx
+#ifndef itkStreamingLabelStatisticsImageFilter_hxx
+#define itkStreamingLabelStatisticsImageFilter_hxx
 #include "itkStreamingLabelStatisticsImageFilter.h"
 
 #include "itkImageRegionIterator.h"

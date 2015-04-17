@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkBoundingRegionImageSinc_h
-#define __itkBoundingRegionImageSinc_h
+#ifndef itkBoundingRegionImageSinc_h
+#define itkBoundingRegionImageSinc_h
 
 #include "itkImageSinc.h"
 #include "itkImageScanlineIterator.h"
@@ -28,12 +28,13 @@ namespace itk
 {
 
 template< class TInputImage >
-class BoundingRegionImageSinc : public ImageSinc<TInputImage>
+class BoundingRegionImageSinc
+  : public ImageSinc<TInputImage>
 {
 public:
   /** Standard class typedefs. */
-  typedef BoundingRegionImageSinc Self;
-  typedef ImageSinc< TInputImage > Superclass;
+  typedef BoundingRegionImageSinc     Self;
+  typedef ImageSinc< TInputImage >    Superclass;
   typedef SmartPointer< Self >        Pointer;
   typedef SmartPointer< const Self >  ConstPointer;
 
@@ -44,7 +45,7 @@ public:
   itkTypeMacro(BoundingRegionImageSinc, ImageSink);
 
   /** Image type information. */
-  typedef typename Superclass::InputImageType InputImageType;
+  typedef typename Superclass::InputImageType       InputImageType;
   typedef typename Superclass::InputImageRegionType RegionType;
 
 
@@ -110,7 +111,7 @@ protected:
     {
       this->ProcessObject::SetNumberOfRequiredOutputs(1);
       this->ProcessObject::SetNthOutput( 0, this->MakeOutput(0).GetPointer() );
-    };
+    }
 
   // ~BoundingRegionImageSinc() {}; Default Ok
 
@@ -229,4 +230,4 @@ private:
 
 } // end namespace itk
 
-#endif //__itkBoundingRegionImageSinc_h
+#endif //itkBoundingRegionImageSinc_h

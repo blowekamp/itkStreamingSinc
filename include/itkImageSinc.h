@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkImageSink_h
-#define __itkImageSink_h
+#ifndef itkImageSinc_h
+#define itkImageSinc_h
 
 #include "itkStreamingProcessObject.h"
 #include "itkImage.h"
@@ -62,7 +62,6 @@ public:
                       InputImageType::ImageDimension);
 
 
-
   using Superclass::SetInput;
   /** Set/Get the image input of this process object.  */
   virtual void SetInput(const InputImageType *input);
@@ -79,9 +78,9 @@ protected:
 
   virtual void PrintSelf(std::ostream & os, Indent indent) const;
 
-  virtual unsigned int 	GetNumberOfInputRequestedRegions (void);
+  virtual unsigned int  GetNumberOfInputRequestedRegions (void);
 
-  virtual void 	GenerateNthInputRequestedRegion (unsigned int inputRequestedRegionNumber);
+  virtual void  GenerateNthInputRequestedRegion (unsigned int inputRequestedRegionNumber);
 
   virtual void StreamedGenerateData( unsigned int  inputRequestedRegionNumber);
 
@@ -116,13 +115,13 @@ private:
   ImageSinc(const ImageSinc &); // purposely not implemented
   ImageSinc &operator=(const ImageSinc &); // purposely not implemented
 
-  unsigned int m_NumberOfStreamDivisions;
+  unsigned int          m_NumberOfStreamDivisions;
   RegionSplitterPointer m_RegionSplitter;
-  InputImageRegionType m_CurrentInputRegion;
+  InputImageRegionType  m_CurrentInputRegion;
 };
 
 }
 
 #include "itkImageSinc.hxx"
 
-#endif // __itkImageSinc_h
+#endif // itkImageSinc_h

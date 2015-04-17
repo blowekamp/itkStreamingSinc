@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkImageSinc_hxx
-#define __itkImageSinc_hxx
+#ifndef itkImageSinc_hxx
+#define itkImageSinc_hxx
 
 namespace itk
 {
@@ -200,4 +200,4 @@ ImageSinc<TInputImage>
 
 }
 
-#endif // __itkImageSinc_hxx
+#endif // itkImageSinc_hxx
