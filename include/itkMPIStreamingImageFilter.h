@@ -58,16 +58,15 @@ protected:
   MPIStreamingImageFilter();
   ~MPIStreamingImageFilter();
 
-  void PrintSelf( std::ostream & os, Indent indent ) const;
+  void PrintSelf( std::ostream & os, Indent indent ) const ITK_OVERRIDE;
 
+  virtual void UpdateOutputInformation() ITK_OVERRIDE;
 
-  virtual void UpdateOutputInformation();
+  virtual void GenerateOutputRequestedRegion(DataObject *outputDO) ITK_OVERRIDE;
 
-  virtual void GenerateOutputRequestedRegion(DataObject *outputDO);
+  virtual void GenerateInputRequestedRegion() ITK_OVERRIDE;
 
-  virtual void GenerateInputRequestedRegion();
-
-  virtual void GenerateData();
+  virtual void GenerateData() ITK_OVERRIDE;
 
 private:
   MPIStreamingImageFilter( const MPIStreamingImageFilter & );  // not implemented
