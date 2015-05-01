@@ -1,0 +1,64 @@
+#include <mpi.h>
+#include <iostream>
+#include "itkMPIStreamingImageFilter.h"
+#include "itkImageFileReader.h"
+#include "itkTimeProbe.h"
+
+
+int itkMPIReadTest( int argc, char *argv[] )
+{
+  MPI_Init( &argc, &argv );
+
+  int size;
+  int rank;
+  MPI_Comm_rank( MPI_COMM_WORLD, &rank );
+  MPI_Comm_size( MPI_COMM_WORLD, &size );
+
+  bool distributedRead = true;
+
+  if ( argc > 2 )
+    {
+    distributedRead = ( atoi(argv[2]) != 0 );
+    }
+
+  typedef itk::Image< float, 3 > ImageType;
+
+  typedef itk::ImageFileReader< ImageType > ReaderType;
+  ReaderType::Pointer reader = ReaderType::New();
+  reader->SetFileName( argv[1] );
+
+
+  typedef itk::Local::MPIStreamingImageFilter<ImageType> MPIStreamerType;
+  MPIStreamerType::Pointer streamer = MPIStreamerType::New();
+  streamer->SetInput( reader->GetOutput() );
+
+  if ( !distributedRead )
+    {
+    itk::TimeProbe t1;
+    t1.Start();
+    reader->UpdateLargestPossibleRegion();
+    t1.Stop();
+
+    if ( rank == 0 )
+      {
+      std::cout << "All read processed in " <<  t1.GetTotal() << t1.GetUnit() << std::endl;
+      }
+    reader->GetOutput()->DisconnectPipeline();
+    }
+
+  itk::TimeProbe t2;
+  t2.Start();
+  streamer->UpdateLargestPossibleRegion();
+  t2.Stop();
+
+
+  if ( rank == 0 )
+    {
+    std::cout << "Distributed with " << size << " processes in " <<  t2.GetTotal() << t2.GetUnit() << std::endl;
+    }
+
+
+  MPI_Finalize();
+
+  return 0;
+}
