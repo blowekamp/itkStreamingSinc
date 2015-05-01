@@ -194,7 +194,6 @@ MPIStreamingImageFilter< TImageType >
 }
 
 
-
 /**
  *
  */
@@ -283,7 +282,6 @@ MPIStreamingImageFilter< TImageType >
   MPI_Allgather( &useBcastLocal, 1, MPI_INT, &(useBcast[0]), 1, MPI_INT, MPI_COMM_WORLD );
 
 
-  
   std::vector< RegionType > recvRegions( m_MPISize );
   std::vector< typename ImageType::Pointer > recvImages( m_MPISize );
   for ( int split = 0; split < m_MPISize; ++split )

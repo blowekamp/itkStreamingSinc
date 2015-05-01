@@ -76,6 +76,7 @@ private:
   int m_MPITAG;
   int m_MPIRank;
   int m_MPISize;
+
   std::vector< RegionType > m_MPIOutputRegions;
   std::vector< RegionType > m_MPIInputRegions;
 
@@ -90,4 +91,3 @@ private:
 #endif
 
 #endif // itkMPIStreamingImageFilter_h
-
