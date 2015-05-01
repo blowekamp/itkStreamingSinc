@@ -441,6 +441,27 @@ void
 MPIStreamingImageFilter< TImageType >
 ::PrintSelf( std::ostream & os, Indent indent ) const
 {
+  Superclass::PrintSelf( os, indent );
+  os << indent << "MPITAG: " << m_MPITAG << std::endl;
+  os << indent << "MPIRank: " << m_MPIRank << std::endl;
+  os << indent << "MPISize: " << m_MPISize << std::endl;
+
+  const Indent indent2 = indent.GetNextIndent();
+  os << indent << "MPIOutputRegions:" << std::endl;
+  for (unsigned int i = 0; i < m_MPIOutputRegions.size(); ++i)
+    {
+    m_MPIOutputRegions[i].Print(os, indent2);
+    }
+
+
+  os << indent << "MPIInputRegions:" << std::endl;
+  for (unsigned int i = 0; i < m_MPIInputRegions.size(); ++i)
+    {
+    m_MPIInputRegions[i].Print(os, indent2);
+    }
+
+  itkPrintSelfObjectMacro( RegionSplitter );
+
 }
 
 
