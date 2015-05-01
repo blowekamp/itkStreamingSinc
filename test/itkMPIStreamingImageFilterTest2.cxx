@@ -38,7 +38,7 @@ int itkMPIStreamingImageFilterTest2( int argc, char *argv[] )
   mean1->SetInput( reader->GetOutput() );
   mean1->SetRadius( 2 );
 
-  typedef itk::Local::MPIStreamingImageFilter<ImageType> MPIStreamerType;
+  typedef itk::MPIStreamingImageFilter<ImageType> MPIStreamerType;
   MPIStreamerType::Pointer streamer1 = MPIStreamerType::New();
   streamer1->SetInput( mean1->GetOutput() );
 

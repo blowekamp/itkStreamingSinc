@@ -46,7 +46,7 @@ int itkMPIReadTest( int argc, char *argv[] )
   reader->SetFileName( argv[1] );
 
 
-  typedef itk::Local::MPIStreamingImageFilter<ImageType> MPIStreamerType;
+  typedef itk::MPIStreamingImageFilter<ImageType> MPIStreamerType;
   MPIStreamerType::Pointer streamer = MPIStreamerType::New();
   streamer->SetInput( reader->GetOutput() );
 
