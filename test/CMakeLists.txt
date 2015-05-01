@@ -91,11 +91,26 @@ itk_add_test(NAME itkMPIStreamingImageFilterTest2
    )
 
 
-itk_add_test(NAME itkMPIReadTest
+itk_add_test(NAME itkMPIReadTest1
+  COMMAND $<TARGET_FILE:${itk-module}TestDriver>
+      --compare
+        ${ITK_TEST_OUTPUT_DIR}/itkMPIReadTest1.mha
+        DATA{${ITK_DATA_ROOT}/Input/HeadMRVolume.mha}
+    itkMPIReadTest
+      DATA{${ITK_DATA_ROOT}/Input/HeadMRVolume.mha}
+      ${ITK_TEST_OUTPUT_DIR}/itkMPIReadTest1.mha
+  )
+
+
+itk_add_test(NAME itkMPIReadTest2
   COMMAND ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
     ${MPIEXEC_PREFLAGS} $<TARGET_FILE:${itk-module}TestDriver> ${MPIEXEC_POSTFLAGS}
+      --compare
+        ${ITK_TEST_OUTPUT_DIR}/itkMPIReadTest2.mha
+        DATA{${ITK_DATA_ROOT}/Input/HeadMRVolume.mha}
     itkMPIReadTest
-    DATA{${ITK_DATA_ROOT}/Input/HeadMRVolume.mha}
+      DATA{${ITK_DATA_ROOT}/Input/HeadMRVolume.mha}
+      ${ITK_TEST_OUTPUT_DIR}/itkMPIReadTest2.mha
   )
 
 endif()

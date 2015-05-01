@@ -20,6 +20,7 @@
 #include <iostream>
 #include "itkMPIStreamingImageFilter.h"
 #include "itkImageFileReader.h"
+#include "itkImageFileWriter.h"
 #include "itkTimeProbe.h"
 
 
@@ -34,11 +35,18 @@ int itkMPIReadTest( int argc, char *argv[] )
 
   bool distributedRead = true;
 
-  if ( argc > 2 )
+  if ( argc < 3 )
+    {
+    std::cerr << "Usage: " << argv[0] << " inFilename outFilename [distributeReadBool=1]" << std::endl;
+    return EXIT_FAILURE;
+    }
+
+  if ( argc > 3 )
     {
     distributedRead = ( atoi(argv[2]) != 0 );
     }
 
+  // only works with float
   typedef itk::Image< float, 3 > ImageType;
 
   typedef itk::ImageFileReader< ImageType > ReaderType;
@@ -73,6 +81,15 @@ int itkMPIReadTest( int argc, char *argv[] )
   if ( rank == 0 )
     {
     std::cout << "Distributed with " << size << " processes in " <<  t2.GetTotal() << t2.GetUnit() << std::endl;
+
+    typedef itk::ImageFileWriter< ImageType > WriterType;
+    WriterType::Pointer writer = WriterType::New();
+    writer->SetFileName( argv[2] );
+    writer->SetInput(streamer->GetOutput());
+    streamer->GetOutput()->DisconnectPipeline(); // IMPORTANT to
+                                                 // disconnect from
+                                                 // MPI pipeline!!! 
+    writer->Update();
     }
 
 
