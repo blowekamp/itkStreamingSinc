@@ -68,6 +68,31 @@ protected:
 
   virtual void GenerateData() ITK_OVERRIDE;
 
+  static MPI_Datatype GetMPIDataTypeForPixel()
+    {
+
+
+#define DefineMPITypeHelper( TYPE, MPI_VALUE ) \
+      if ( IsSame<TYPE, typename TImageType::PixelType>::Value )  { return MPI_VALUE; }
+
+      DefineMPITypeHelper( float, MPI_FLOAT );
+      DefineMPITypeHelper( double, MPI_DOUBLE );
+
+      DefineMPITypeHelper( char, MPI_CHAR );
+      DefineMPITypeHelper( unsigned char, MPI_UNSIGNED_CHAR );
+      DefineMPITypeHelper( short, MPI_SHORT );
+      DefineMPITypeHelper( unsigned short, MPI_UNSIGNED_SHORT );
+      DefineMPITypeHelper( int, MPI_INT );
+      DefineMPITypeHelper( unsigned int, MPI_UNSIGNED );
+      DefineMPITypeHelper( long, MPI_LONG );
+      DefineMPITypeHelper( unsigned long, MPI_UNSIGNED_LONG );
+      DefineMPITypeHelper( long long, MPI_LONG_LONG_INT );
+      DefineMPITypeHelper( unsigned long long, MPI_UNSIGNED_LONG_LONG );
+
+#undef DefineMPITypeHelper
+      itkGenericExceptionMacro("Unsupported PixelType");
+    }
+
 private:
   MPIStreamingImageFilter( const MPIStreamingImageFilter & );  // not implemented
   MPIStreamingImageFilter &operator=( const MPIStreamingImageFilter &);
@@ -75,6 +100,8 @@ private:
   int m_MPITAG;
   int m_MPIRank;
   int m_MPISize;
+
+  const MPI_Datatype m_MPIDataType;
 
   std::vector< RegionType > m_MPIOutputRegions;
   std::vector< RegionType > m_MPIInputRegions;

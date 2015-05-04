@@ -30,6 +30,7 @@ namespace itk
 template < class TImageType >
 MPIStreamingImageFilter< TImageType >
 ::MPIStreamingImageFilter()
+  : m_MPIDataType(GetMPIDataTypeForPixel())
 {
   m_MPITAG = 99;
 
@@ -325,7 +326,7 @@ MPIStreamingImageFilter< TImageType >
         {
         MPI_Bcast( sendImages[ (split+1)%m_MPISize ]->GetBufferPointer(),
                    sendRegions[ (split+1)%m_MPISize ].GetNumberOfPixels(),
-                   MPI_FLOAT,
+                   m_MPIDataType,
                    split,
                    MPI_COMM_WORLD );
         }
@@ -333,7 +334,7 @@ MPIStreamingImageFilter< TImageType >
         {
         MPI_Bcast( recvImages[ split ]->GetBufferPointer(),
                    recvRegions[ split ].GetNumberOfPixels(),
-                   MPI_FLOAT,
+                   m_MPIDataType,
                    split,
                    MPI_COMM_WORLD );
         }
@@ -360,7 +361,7 @@ MPIStreamingImageFilter< TImageType >
         {
         MPI_Irecv( recvImages[ split ]->GetBufferPointer(),
                    recvRegions[ split ].GetNumberOfPixels(),
-                   MPI_FLOAT,
+                   m_MPIDataType,
                    split,
                    m_MPITAG,
                    MPI_COMM_WORLD,
@@ -370,7 +371,7 @@ MPIStreamingImageFilter< TImageType >
         {
         MPI_Isend( sendImages[ split ]->GetBufferPointer(),
                    sendRegions[ split ].GetNumberOfPixels(),
-                   MPI_FLOAT,
+                   m_MPIDataType,
                    split,
                    m_MPITAG,
                    MPI_COMM_WORLD,
