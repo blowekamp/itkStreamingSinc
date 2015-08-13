@@ -1,30 +1,34 @@
+This ITK module contains some advanced classes for image streaming and
+MPI distributed processing through streaming. 
+
+
 General
-=======
+------
 
-This is a module for [ITK](http://itk.org): The Insight Toolkit for Segmentation and
-Registration. It is designed to work with the ITKv4
-modular system and  to be places it ITK/Modules/External or uses as a
-Remote module.
-
-This module is for a set of streaming sinc classes to process data out-of-core.
+This is a module for ITK: The Insight Toolkit for Segmentation and
+Registration. It is designed to work with the ITKv4 modular system and
+to be placed in ITK/Modules/External.
 
 
 Getting Started
-=======
+---------------
 
-This module should be cloned into the ITK reposiory as a subdirectory in the "Modules/External" directory.
+This module should be cloned into the ITK reposiory as a subdirectory
+in the "Modules/External" directory.
 
-Then when cmake is run the ITK build the name of this module will appears, and it needs to be enabled.
+The following is a brief list of instructions to get a external module
+into ITK:
 
+cd ITK/Modules/External/
+git clone https://github.com/blowekamp/itkStreamingSinc.git
 
-License
-=======
-
-This software is distributed under the Apache License. Please see
-LICENSE for details.
+Then configure ITK as not make but set "Module_StreamingSinc" to "ON" to
+enable this module. The external module will need to be manually
+updated from the git respository.
 
 
 Author
-======
+------
+
 
 Bradley Lowekamp
