@@ -94,8 +94,7 @@ protected:
     }
 
 private:
-  MPIStreamingImageFilter( const MPIStreamingImageFilter & );  // not implemented
-  MPIStreamingImageFilter &operator=( const MPIStreamingImageFilter &);
+  ITK_DISALLOW_COPY_AND_ASSIGN(MPIStreamingImageFilter);
 
   int m_MPITAG;
   int m_MPIRank;

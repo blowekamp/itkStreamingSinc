@@ -157,8 +157,7 @@ protected:
 
 
 private:
-  StreamingStatisticsImageFilter(const Self &); //purposely not implemented
-  void operator=(const Self &);        //purposely not implemented
+  ITK_DISALLOW_COPY_AND_ASSIGN(StreamingStatisticsImageFilter);
 
   Array< RealType >       m_ThreadSum;
   Array< RealType >       m_SumOfSquares;

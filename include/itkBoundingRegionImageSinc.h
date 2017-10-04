@@ -116,10 +116,9 @@ protected:
       this->ProcessObject::SetNumberOfRequiredOutputs(1);
       this->ProcessObject::SetNthOutput( 0, this->MakeOutput(0).GetPointer() );
     }
+  ~BoundingRegionImageSinc() {}
 
-  // ~BoundingRegionImageSinc() {}; Default Ok
-
-  void PrintSelf(std::ostream & os, Indent indent) const
+  void PrintSelf(std::ostream & os, Indent indent) const  ITK_OVERRIDE
     {
       Superclass::PrintSelf(os, indent);
 
@@ -127,12 +126,12 @@ protected:
     }
 
 
-  virtual void BeforeStreamedGenerateData( void )
+  virtual void BeforeStreamedGenerateData( void ) ITK_OVERRIDE
     {
       this->m_ThreadRegions.resize(this->GetNumberOfThreads());
     }
 
-  virtual void ThreadedStreamedGenerateData(const RegionType &inputRegionForChunk, ThreadIdType threadId)
+  virtual void ThreadedStreamedGenerateData(const RegionType &inputRegionForChunk, ThreadIdType threadId) ITK_OVERRIDE
     {
 
       typedef ImageScanlineConstIterator< TInputImage > InputConstIteratorType;
@@ -218,7 +217,7 @@ protected:
       m_ThreadRegions[threadId] = RegionUnion(m_ThreadRegions[threadId],r);
     }
 
-  virtual void AfterStreamedGenerateData( void )
+  virtual void AfterStreamedGenerateData( void ) ITK_OVERRIDE
     {
       for (unsigned int i = 1; i < this->GetNumberOfThreads(); ++i)
         {
@@ -229,6 +228,8 @@ protected:
     }
 
 private:
+  ITK_DISALLOW_COPY_AND_ASSIGN(BoundingRegionImageSinc);
+
   std::vector<RegionType> m_ThreadRegions;
 };
 
