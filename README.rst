@@ -9,6 +9,10 @@ This repository contains an `ITK: The Insight Toolkit for Segmentation and Regis
 with advanced classes for image streaming and MPI distributed image processing through streaming.  It is designed
 to work with the ITKv4 modular system by being placed in the ITK source code.
 
+Filters such at StreamingLabelStatisticsImageFilter can compute statistics about segmented or labeled image, by only
+using a fraction of the image at one time. So a pipeline can be constructed with a streaming image reader which computes
+statistics about an image with out-of-core methods.
+
 Getting Started
 ---------------
 
