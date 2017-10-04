@@ -210,21 +210,20 @@ public:
 protected:
   StreamingLabelStatisticsImageFilter();
   ~StreamingLabelStatisticsImageFilter();
-  void PrintSelf(std::ostream & os, Indent indent) const;
+  void PrintSelf(std::ostream & os, Indent indent) const ITK_OVERRIDE;
 
   /** Initialize some accumulators before the iterative runs. */
-  void BeforeStreamedGenerateData();
+  void BeforeStreamedGenerateData() ITK_OVERRIDE;
 
   /** Do final mean and variance computation from data accumulated in interations.
     */
-  virtual void AfterStreamedGenerateData();
+  virtual void AfterStreamedGenerateData() ITK_OVERRIDE;
 
   /** Multi-thread version GenerateData. */
-  virtual void  ThreadedStreamedGenerateData( const RegionType &inputRegion, ThreadIdType id );
+  virtual void  ThreadedStreamedGenerateData( const RegionType &inputRegion, ThreadIdType id ) ITK_OVERRIDE;
 
 private:
-  StreamingLabelStatisticsImageFilter(const Self &); //purposely not implemented
-  void operator=(const Self &);             //purposely not implemented
+  ITK_DISALLOW_COPY_AND_ASSIGN(StreamingLabelStatisticsImageFilter);
 
   std::vector< MapType >        m_LabelStatisticsPerThread;
   MapType                       m_LabelStatistics;

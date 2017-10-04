@@ -42,26 +42,25 @@ public:
   itkTypeMacro(StreamingProcessObject,ProcessObject);
 
 
-  virtual void PropagateRequestedRegion(DataObject *output);
+  virtual void PropagateRequestedRegion(DataObject *output) ITK_OVERRIDE;
 
-  virtual void GenerateData( void );
+  virtual void GenerateData( void ) ITK_OVERRIDE;
 
   /** Override UpdateOutputData() from ProcessObject to divide upstream
    * updates into pieces. This filter does not have a GenerateData()
    * or ThreadedGenerateData() method.  Instead, all the work is done
    * in UpdateOutputData() since it must update a little, execute a little,
    * update some more, execute some more, etc. */
-  virtual void UpdateOutputData(DataObject *output);
+  virtual void UpdateOutputData(DataObject *output) ITK_OVERRIDE;
 
   /** the current request number of -1, it not currently streaming */
   virtual int GetCurrentRequestNumber( ) const { return m_CurrentRequestNumber; }
 
-  virtual void ResetPipeline() { Superclass::ResetPipeline(); m_CurrentRequestNumber = -1; }
+  virtual void ResetPipeline()  ITK_OVERRIDE { Superclass::ResetPipeline(); m_CurrentRequestNumber = -1; }
 
 protected:
   StreamingProcessObject( void ) { m_CurrentRequestNumber = -1; }
-  // ~StreamingProcessObject(); use default virtual implementation
-  void PrintSelf(std::ostream& os, Indent indent) const { Superclass::PrintSelf(os,indent); }
+  void PrintSelf(std::ostream& os, Indent indent) const  ITK_OVERRIDE { Superclass::PrintSelf(os,indent); }
 
 
   virtual unsigned int GetNumberOfInputRequestedRegions( void ) = 0;
@@ -72,8 +71,7 @@ protected:
   virtual void AfterStreamedGenerateData( void ) {};
 
 private:
-  StreamingProcessObject(const StreamingProcessObject&); //purposely not implemented
-  void operator=(const StreamingProcessObject&); //purposely not implemented
+  ITK_DISALLOW_COPY_AND_ASSIGN(StreamingProcessObject);
 
   int m_CurrentRequestNumber;
 };

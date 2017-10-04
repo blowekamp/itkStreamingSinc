@@ -70,19 +70,18 @@ public:
 
   virtual const InputImageType *GetInput(unsigned int idx) const;
 
-  virtual void Update( );
+  virtual void Update( ) ITK_OVERRIDE;
 
 protected:
   ImageSinc();
-  // ~ImageSinc() {} use default virtual implementation
 
-  virtual void PrintSelf(std::ostream & os, Indent indent) const;
+  virtual void PrintSelf(std::ostream & os, Indent indent) const ITK_OVERRIDE;
 
-  virtual unsigned int  GetNumberOfInputRequestedRegions (void);
+  virtual unsigned int GetNumberOfInputRequestedRegions (void) ITK_OVERRIDE;
 
-  virtual void  GenerateNthInputRequestedRegion (unsigned int inputRequestedRegionNumber);
+  virtual void  GenerateNthInputRequestedRegion (unsigned int inputRequestedRegionNumber) ITK_OVERRIDE;
 
-  virtual void StreamedGenerateData( unsigned int  inputRequestedRegionNumber);
+  virtual void StreamedGenerateData( unsigned int  inputRequestedRegionNumber) ITK_OVERRIDE;
 
   virtual void ThreadedStreamedGenerateData( const InputImageRegionType &inputRegionForChunk, ThreadIdType ) = 0;
 
@@ -112,8 +111,7 @@ protected:
   };
 
 private:
-  ImageSinc(const ImageSinc &); // purposely not implemented
-  ImageSinc &operator=(const ImageSinc &); // purposely not implemented
+  ITK_DISALLOW_COPY_AND_ASSIGN(ImageSinc);
 
   unsigned int          m_NumberOfStreamDivisions;
   RegionSplitterPointer m_RegionSplitter;
