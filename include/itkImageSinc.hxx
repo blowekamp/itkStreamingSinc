@@ -18,6 +18,8 @@
 #ifndef itkImageSinc_hxx
 #define itkImageSinc_hxx
 
+#include "itkImageSinc.h"
+
 namespace itk
 {
 
