@@ -46,7 +46,7 @@ int itkBoundingRegionImageSincTest(int argc, char* argv[] )
   typedef itk::BoundingRegionImageSinc<ImageType> RegionFilterType;
   RegionFilterType::Pointer filter = RegionFilterType::New();
 
-  EXERCISE_BASIC_OBJECT_METHODS( filter, BoundingRegionImageSinc );
+  EXERCISE_BASIC_OBJECT_METHODS( filter, BoundingRegionImageSinc, ImageSinc );
 
   filter->SetInput(reader->GetOutput());
   filter->SetNumberOfStreamDivisions( numberOfStreamDivisions );

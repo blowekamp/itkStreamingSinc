@@ -1,9 +1,10 @@
 This ITK module contains some advanced classes for image streaming and
+
 MPI distributed processing through streaming. 
 
 
 General
-------
+-------
 
 This is a module for ITK: The Insight Toolkit for Segmentation and
 Registration. It is designed to work with the ITKv4 modular system and
@@ -29,6 +30,5 @@ updated from the git respository.
 
 Author
 ------
-
 
 Bradley Lowekamp
