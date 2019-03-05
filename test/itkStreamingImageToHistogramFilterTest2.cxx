@@ -16,11 +16,11 @@
  *
  *=========================================================================*/
 
-#include "itkImageToHistogramFilter.h"
+#include "itkStreamingImageToHistogramFilter.h"
 #include "itkImageFileReader.h"
 #include "itkSimpleFilterWatcher.h"
 
-int itkImageToHistogramFilterTest2( int argc, char * argv [] )
+int itkStreamingImageToHistogramFilterTest2( int argc, char * argv [] )
 {
 
   if( argc < 3 )
@@ -59,7 +59,7 @@ int itkImageToHistogramFilterTest2( int argc, char * argv [] )
     }
 
 
-  typedef itk::Statistics::ImageToHistogramFilter< RGBImageType >   HistogramFilterType;
+  typedef itk::Statistics::StreamingImageToHistogramFilter< RGBImageType >   HistogramFilterType;
 
   HistogramFilterType::Pointer histogramFilter = HistogramFilterType::New();
   itk::SimpleFilterWatcher watcher(histogramFilter, "filter");

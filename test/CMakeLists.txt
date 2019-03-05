@@ -7,9 +7,9 @@ set(ITK${itk-module}Tests
   itkStreamingLabelStatisticsImageFilterTest.cxx
   itkStreamingStatisticsImageFilterTest.cxx
   itkStreamingStatisticsImageFilterTest2.cxx
-  itkImageToHistogramFilterTest.cxx
-  itkImageToHistogramFilterTest2.cxx
-  itkImageToHistogramFilterTest3.cxx
+  itkStreamingImageToHistogramFilterTest.cxx
+  itkStreamingImageToHistogramFilterTest2.cxx
+  itkStreamingImageToHistogramFilterTest3.cxx
   itkBoundingRegionImageSincTest.cxx
 )
 
@@ -47,14 +47,14 @@ itk_add_test( NAME itkStreamingStatisticsImageFilterTest2_3
   COMMAND ${itk-module}TestDriver itkStreamingStatisticsImageFilterTest2
  DATA{${ITK_DATA_ROOT}/Input/peppers.png} 20)
 
-itk_add_test(NAME itkImageToHistogramFilterTest
-      COMMAND ITKImageStatisticsTestDriver itkImageToHistogramFilterTest)
-itk_add_test(NAME itkImageToHistogramFilterTest2
-      COMMAND ITKImageStatisticsTestDriver itkImageToHistogramFilterTest2
-              DATA{${ITK_DATA_ROOT}/Input/VisibleWomanEyeSlice.png} ${ITK_TEST_OUTPUT_DIR}/itkImageToHistogramFilterTest2.txt)
-itk_add_test(NAME itkImageToHistogramFilterTest3
-      COMMAND ITKImageStatisticsTestDriver itkImageToHistogramFilterTest3
-              DATA{${ITK_DATA_ROOT}/Input/cthead1.png} ${ITK_TEST_OUTPUT_DIR}/itkImageToHistogramFilterTest3.txt)
+itk_add_test(NAME itkStreamingImageToHistogramFilterTest
+      COMMAND ITKImageStatisticsTestDriver itkStreamingImageToHistogramFilterTest)
+itk_add_test(NAME itkStreamingImageToHistogramFilterTest2
+      COMMAND ITKImageStatisticsTestDriver itkStreamingImageToHistogramFilterTest2
+              DATA{${ITK_DATA_ROOT}/Input/VisibleWomanEyeSlice.png} ${ITK_TEST_OUTPUT_DIR}/itkStreamingImageToHistogramFilterTest2.txt)
+itk_add_test(NAME itkStreamingImageToHistogramFilterTest3
+      COMMAND ITKImageStatisticsTestDriver itkStreamingImageToHistogramFilterTest3
+              DATA{${ITK_DATA_ROOT}/Input/cthead1.png} ${ITK_TEST_OUTPUT_DIR}/itkStreamingImageToHistogramFilterTest3.txt)
 
 #PASS_REGULAR_EXPRESSION
 

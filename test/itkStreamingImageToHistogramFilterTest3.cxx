@@ -20,7 +20,7 @@
 #include "itkMinimumMaximumImageFilter.h"
 #include "itkImageFileReader.h"
 
-int itkImageToHistogramFilterTest3( int argc, char * argv [] )
+int itkStreamingImageToHistogramFilterTest3( int argc, char * argv [] )
 {
 
   if( argc < 3 )

@@ -15,10 +15,10 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef itkImageToHistogramFilter_hxx
-#define itkImageToHistogramFilter_hxx
+#ifndef itkStreamingImageToHistogramFilter_hxx
+#define itkStreamingImageToHistogramFilter_hxx
 
-#include "itkImageToHistogramFilter.h"
+#include "itkStreamingImageToHistogramFilter.h"
 #include "itkImageRegionConstIterator.h"
 
 namespace itk
@@ -26,8 +26,8 @@ namespace itk
 namespace Statistics
 {
 template< typename TImage >
-ImageToHistogramFilter< TImage >
-::ImageToHistogramFilter()
+StreamingImageToHistogramFilter< TImage >
+::StreamingImageToHistogramFilter()
 {
   this->SetNumberOfRequiredInputs(1);
   this->SetNumberOfRequiredOutputs(1);
@@ -56,15 +56,15 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 DataObject::Pointer
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::MakeOutput( DataObjectPointerArraySizeType itkNotUsed(idx) )
 {
   return HistogramType::New().GetPointer();
 }
 
 template< typename TImage >
-const typename ImageToHistogramFilter< TImage >::HistogramType *
-ImageToHistogramFilter< TImage >
+const typename StreamingImageToHistogramFilter< TImage >::HistogramType *
+StreamingImageToHistogramFilter< TImage >
 ::GetOutput() const
 {
   const HistogramType *output =
@@ -74,8 +74,8 @@ ImageToHistogramFilter< TImage >
 }
 
 template< typename TImage >
-typename ImageToHistogramFilter< TImage >::HistogramType *
-ImageToHistogramFilter< TImage >
+typename StreamingImageToHistogramFilter< TImage >::HistogramType *
+StreamingImageToHistogramFilter< TImage >
 ::GetOutput()
 {
   HistogramType *output =
@@ -86,7 +86,7 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 void
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::GraftOutput(DataObject *graft)
 {
   DataObject *output =
@@ -99,7 +99,7 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 void
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::BeforeThreadedGenerateData()
 {
   // find the actual number of threads
@@ -125,7 +125,7 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 void
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::ThreadedGenerateData(const RegionType & inputRegionForThread, ThreadIdType threadId)
 {
   long nbOfPixels = inputRegionForThread.GetNumberOfPixels();
@@ -230,7 +230,7 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 void
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::AfterThreadedGenerateData()
 {
   // group the results in the output histogram
@@ -260,7 +260,7 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 void
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::ThreadedComputeMinimumAndMaximum(const RegionType & inputRegionForThread, ThreadIdType threadId, ProgressReporter & progress )
 {
   unsigned int nbOfComponents = this->GetInput()->GetNumberOfComponentsPerPixel();
@@ -291,7 +291,7 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 void
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::ThreadedComputeHistogram(const RegionType & inputRegionForThread, ThreadIdType threadId, ProgressReporter & progress )
 {
   unsigned int nbOfComponents = this->GetInput()->GetNumberOfComponentsPerPixel();
@@ -313,7 +313,7 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 void
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::ApplyMarginalScale( HistogramMeasurementVectorType & min, HistogramMeasurementVectorType & max, HistogramSizeType & size )
 {
   unsigned int nbOfComponents = this->GetInput()->GetNumberOfComponentsPerPixel();
@@ -384,7 +384,7 @@ ImageToHistogramFilter< TImage >
 
 template< typename TImage >
 void
-ImageToHistogramFilter< TImage >
+StreamingImageToHistogramFilter< TImage >
 ::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);

@@ -16,14 +16,14 @@
  *
  *=========================================================================*/
 
-#include "itkImageToHistogramFilter.h"
+#include "itkStreamingImageToHistogramFilter.h"
 #include "itkImageRegionIteratorWithIndex.h"
 #include "itkSimpleFilterWatcher.h"
 #include "itkIntTypes.h"
 #include "itkMacro.h"
 #include "itkMath.h"
 
-int itkImageToHistogramFilterTest( int , char * [] )
+int itkStreamingImageToHistogramFilterTest( int , char * [] )
 {
 
 
@@ -75,7 +75,7 @@ int itkImageToHistogramFilterTest( int , char * [] )
     ++it;
     }
 
-  typedef itk::Statistics::ImageToHistogramFilter< RGBImageType >         HistogramFilterType;
+  typedef itk::Statistics::StreamingImageToHistogramFilter< RGBImageType >         HistogramFilterType;
   typedef HistogramFilterType::HistogramMeasurementVectorType             HistogramMeasurementVectorType;
   typedef HistogramFilterType::InputHistogramMeasurementVectorObjectType  InputHistogramMeasurementVectorObjectType;
   typedef HistogramFilterType::InputBooleanObjectType                     InputBooleanObjectType;

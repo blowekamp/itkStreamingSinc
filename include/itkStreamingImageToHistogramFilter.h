@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef itkImageToHistogramFilter_h
-#define itkImageToHistogramFilter_h
+#ifndef itkStreamingImageToHistogramFilter_h
+#define itkStreamingImageToHistogramFilter_h
 
 #include "itkHistogram.h"
 #include "itkImageTransformer.h"
@@ -28,7 +28,7 @@ namespace itk
 {
 namespace Statistics
 {
-/** \class ImageToHistogramFilter
+/** \class StreamingImageToHistogramFilter
  *  \brief This class generates an histogram from an image.
  *
  *  The concept of Histogram in ITK is quite generic. It has been designed to
@@ -40,17 +40,17 @@ namespace Statistics
  */
 
 template< typename TImage >
-class ITK_TEMPLATE_EXPORT ImageToHistogramFilter:public ImageTransformer<TImage>
+class ITK_TEMPLATE_EXPORT StreamingImageToHistogramFilter:public ImageTransformer<TImage>
 {
 public:
   /** Standard typedefs */
-  typedef ImageToHistogramFilter     Self;
+  typedef StreamingImageToHistogramFilter     Self;
   typedef ImageTransformer<TImage>   Superclass;
   typedef SmartPointer< Self >       Pointer;
   typedef SmartPointer< const Self > ConstPointer;
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro(ImageToHistogramFilter, ImageTransformer);
+  itkTypeMacro(StreamingImageToHistogramFilter, ImageTransformer);
 
   /** standard New() method support */
   itkNewMacro(Self);
@@ -118,8 +118,8 @@ public:
   virtual void GraftOutput(DataObject *output);
 
 protected:
-  ImageToHistogramFilter();
-  virtual ~ImageToHistogramFilter() ITK_OVERRIDE {}
+  StreamingImageToHistogramFilter();
+  virtual ~StreamingImageToHistogramFilter() ITK_OVERRIDE {}
   void PrintSelf(std::ostream & os, Indent indent) const ITK_OVERRIDE;
 
   void BeforeThreadedGenerateData(void) ITK_OVERRIDE;
@@ -139,7 +139,7 @@ protected:
   std::vector< HistogramMeasurementVectorType > m_Maximums;
 
 private:
-  ITK_DISALLOW_COPY_AND_ASSIGN(ImageToHistogramFilter);
+  ITK_DISALLOW_COPY_AND_ASSIGN(StreamingImageToHistogramFilter);
 
   void ApplyMarginalScale( HistogramMeasurementVectorType & min, HistogramMeasurementVectorType & max, HistogramSizeType & size );
   typename Barrier::Pointer                     m_Barrier;
@@ -149,7 +149,7 @@ private:
 } // end of namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkImageToHistogramFilter.hxx"
+#include "itkStreamingImageToHistogramFilter.hxx"
 #endif
 
 #endif
