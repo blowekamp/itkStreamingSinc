@@ -19,7 +19,7 @@
 #define itkStreamingImageToHistogramFilter_h
 
 #include "itkHistogram.h"
-#include "itkImageTransformer.h"
+#include "itkImageSinc.h"
 #include "itkBarrier.h"
 #include "itkSimpleDataObjectDecorator.h"
 #include "itkProgressReporter.h"
@@ -89,6 +89,10 @@ public:
 
   /** Type of DataObjects to use for AutoMinimumMaximum input */
   typedef SimpleDataObjectDecorator< bool > InputBooleanObjectType;
+
+  // Change the acces from protected to public
+  using Superclass::SetNumberOfStreamDivisions;
+  using Superclass::GetNumberOfStreamDivisions;
 
   /** Methods for setting and getting the histogram size.  The histogram size
    * is encapsulated inside a decorator class. For this reason, it is possible
