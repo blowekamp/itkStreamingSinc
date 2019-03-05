@@ -100,7 +100,7 @@ StreamingImageToHistogramFilter< TImage >
 template< typename TImage >
 void
 StreamingImageToHistogramFilter< TImage >
-::BeforeThreadedGenerateData()
+::BeforeStreamedGenerateData()
 {
   // find the actual number of threads
   long nbOfThreads = this->GetNumberOfThreads();
@@ -126,7 +126,7 @@ StreamingImageToHistogramFilter< TImage >
 template< typename TImage >
 void
 StreamingImageToHistogramFilter< TImage >
-::ThreadedGenerateData(const RegionType & inputRegionForThread, ThreadIdType threadId)
+::ThreadedStreamedGenerateData(const RegionType & inputRegionForThread, ThreadIdType threadId)
 {
   long nbOfPixels = inputRegionForThread.GetNumberOfPixels();
   if( this->GetAutoMinimumMaximumInput() && this->GetAutoMinimumMaximum() )
@@ -231,7 +231,7 @@ StreamingImageToHistogramFilter< TImage >
 template< typename TImage >
 void
 StreamingImageToHistogramFilter< TImage >
-::AfterThreadedGenerateData()
+::AfterStreamedGenerateData()
 {
   // group the results in the output histogram
   HistogramType * hist = m_Histograms[0];

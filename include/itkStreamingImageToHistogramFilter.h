@@ -40,12 +40,12 @@ namespace Statistics
  */
 
 template< typename TImage >
-class ITK_TEMPLATE_EXPORT StreamingImageToHistogramFilter:public ImageTransformer<TImage>
+class ITK_TEMPLATE_EXPORT StreamingImageToHistogramFilter:public ImageSinc<TImage>
 {
 public:
   /** Standard typedefs */
   typedef StreamingImageToHistogramFilter     Self;
-  typedef ImageTransformer<TImage>   Superclass;
+  typedef ImageSinc<TImage>   Superclass;
   typedef SmartPointer< Self >       Pointer;
   typedef SmartPointer< const Self > ConstPointer;
 
@@ -122,9 +122,9 @@ protected:
   virtual ~StreamingImageToHistogramFilter() ITK_OVERRIDE {}
   void PrintSelf(std::ostream & os, Indent indent) const ITK_OVERRIDE;
 
-  void BeforeThreadedGenerateData(void) ITK_OVERRIDE;
-  void ThreadedGenerateData(const RegionType & inputRegionForThread, ThreadIdType threadId) ITK_OVERRIDE;
-  void AfterThreadedGenerateData(void) ITK_OVERRIDE;
+  void BeforeStreamedGenerateData(void) ITK_OVERRIDE;
+  void ThreadedStreamedGenerateData(const RegionType & inputRegionForThread, ThreadIdType threadId) ITK_OVERRIDE;
+  void AfterStreamedGenerateData(void) ITK_OVERRIDE;
 
   /** Method that construct the outputs */
   typedef ProcessObject::DataObjectPointerArraySizeType DataObjectPointerArraySizeType;
