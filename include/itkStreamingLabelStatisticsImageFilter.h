@@ -23,7 +23,6 @@
 #include "itkSimpleDataObjectDecorator.h"
 #include "itksys/hash_map.hxx"
 #include "itkHistogram.h"
-#include "itkFastMutexLock.h"
 #include "itkLabelStatisticsImageFilter.h"
 #include <vector>
 
@@ -235,7 +234,6 @@ private:
 
   RealType            m_LowerBound;
   RealType            m_UpperBound;
-  SimpleFastMutexLock m_Mutex;
 }; // end of class
 } // end namespace itk
 
