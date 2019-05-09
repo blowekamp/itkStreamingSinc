@@ -25,7 +25,7 @@
 #include "itkStreamingLabelStatisticsImageFilter.h"
 #include "itkImageFileReader.h"
 
-#include "itkFilterWatcher.h"
+#include "itkSimpleFilterWatcher.h"
 
 #include "vnl/vnl_math.h"
 
@@ -58,7 +58,7 @@ int itkStreamingLabelStatisticsImageFilterTest(int argc, char* argv [] )
   FilterType::Pointer filter = FilterType::New();
   filter->DebugOn();
 
-  FilterWatcher filterWatch( filter );
+  itk::SimpleFilterWatcher filterWatch( filter );
 
   filter->SetInput (      reader1->GetOutput() );
   filter->SetLabelInput ( reader2->GetOutput() );

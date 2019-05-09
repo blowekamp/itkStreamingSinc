@@ -22,7 +22,7 @@
 
 #include "itkStatisticsImageFilter.h"
 #include "itkRandomImageSource.h"
-#include "itkFilterWatcher.h"
+#include "itkSimpleFilterWatcher.h"
 
 int itkStreamingStatisticsImageFilterTest(int, char* [] )
 {
@@ -50,7 +50,7 @@ int itkStreamingStatisticsImageFilterTest(int, char* [] )
   typedef itk::StatisticsImageFilter<FloatImage> FilterType;
   FilterType::Pointer filter = FilterType::New();
 
-  FilterWatcher filterWatch(filter);
+  itk::SimpleFilterWatcher filterWatch(filter);
 
   filter->SetInput (image);
   filter->UpdateLargestPossibleRegion();
