@@ -106,7 +106,7 @@ public:
           return RegionObjectType::New().GetPointer();
           break;
         default:
-          return NULL;
+          return nullptr;
         }
     }
 

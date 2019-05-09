@@ -173,10 +173,10 @@ ImageSinc<TInputImage>
 {
   ThreadStruct *str;
 
-  const ThreadIdType threadId = ( (MultiThreader::ThreadInfoStruct *)( arg ) )->ThreadID;
-  const ThreadIdType  threadCount = ( (MultiThreader::ThreadInfoStruct *)( arg ) )->NumberOfThreads;
+  const ThreadIdType threadId = ( (MultiThreaderBase::ThreadInfoStruct *)( arg ) )->ThreadID;
+  const ThreadIdType  threadCount = ( (MultiThreaderBase::ThreadInfoStruct *)( arg ) )->NumberOfThreads;
 
-  str = (ThreadStruct *)( ( (MultiThreader::ThreadInfoStruct *)( arg ) )->UserData );
+  str = (ThreadStruct *)( ( (MultiThreaderBase::ThreadInfoStruct *)( arg ) )->UserData );
 
   const ThreadIdType  total = str->Filter->GetRegionSplitter()->GetNumberOfSplits( str->currentInputRegion,  threadCount );
 
@@ -197,7 +197,7 @@ ImageSinc<TInputImage>
   //   few threads idle.
   //   }
 
-  return ITK_THREAD_RETURN_VALUE;
+  return ITK_THREAD_RETURN_DEFAULT_VALUE;
 }
 
 }

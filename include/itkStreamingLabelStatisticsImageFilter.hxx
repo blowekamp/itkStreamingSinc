@@ -184,7 +184,7 @@ StreamingLabelStatisticsImageFilter< TInputImage, TLabelImage >
       }
 
     // sigma
-    ( *mapIt ).second.m_Sigma = vcl_sqrt( ( *mapIt ).second.m_Variance );
+    ( *mapIt ).second.m_Sigma = std::sqrt( ( *mapIt ).second.m_Variance );
     }
 
     {
