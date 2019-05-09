@@ -20,7 +20,7 @@
 
 #include "itkMersenneTwisterRandomVariateGenerator.h"
 
-#include "itkStatisticsImageFilter.h"
+#include "itkStreamingStatisticsImageFilter.h"
 #include "itkRandomImageSource.h"
 #include "itkSimpleFilterWatcher.h"
 
@@ -47,7 +47,7 @@ int itkStreamingStatisticsImageFilterTest(int, char* [] )
 
   float sum = fillValue * static_cast<float>( region.GetNumberOfPixels() );
 
-  typedef itk::StatisticsImageFilter<FloatImage> FilterType;
+  typedef itk::StreamingStatisticsImageFilter<FloatImage> FilterType;
   FilterType::Pointer filter = FilterType::New();
 
   itk::SimpleFilterWatcher filterWatch(filter);
@@ -130,7 +130,7 @@ int itkStreamingStatisticsImageFilterTest(int, char* [] )
     it.Set(rvgen->GetNormalVariate(knownMean, knownVariance));
     ++it;
     }
-  typedef itk::StatisticsImageFilter<DoubleImage> DFilterType;
+  typedef itk::StreamingStatisticsImageFilter<DoubleImage> DFilterType;
   DFilterType::Pointer dfilter = DFilterType::New();
   dfilter->SetInput(dImage);
   dfilter->UpdateLargestPossibleRegion();
