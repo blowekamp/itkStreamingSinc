@@ -128,7 +128,7 @@ protected:
 
   virtual void BeforeStreamedGenerateData( void ) ITK_OVERRIDE
     {
-      this->m_ThreadRegions.resize(this->GetNumberOfThreads());
+      this->m_ThreadRegions.resize(this->GetNumberOfWorkUnits());
     }
 
   virtual void ThreadedStreamedGenerateData(const RegionType &inputRegionForChunk, ThreadIdType threadId) ITK_OVERRIDE
@@ -219,7 +219,7 @@ protected:
 
   virtual void AfterStreamedGenerateData( void ) ITK_OVERRIDE
     {
-      for (unsigned int i = 1; i < this->GetNumberOfThreads(); ++i)
+      for (unsigned int i = 1; i < this->GetNumberOfWorkUnits(); ++i)
         {
          m_ThreadRegions[0] = RegionUnion(m_ThreadRegions[0],m_ThreadRegions[i]);
         }
