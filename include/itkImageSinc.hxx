@@ -152,52 +152,20 @@ void
 ImageSinc<TInputImage>
 ::StreamedGenerateData( unsigned int itkNotUsed(inputRequestedRegionNumber) )
 {
-  // Set up the multithreaded processing
-  ThreadStruct str;
-  str.Filter = this;
-  str.currentInputRegion = m_CurrentInputRegion;
 
-  this->GetMultiThreader()->SetNumberOfThreads( this->GetNumberOfThreads() );
-  this->GetMultiThreader()->SetSingleMethod(this->ThreaderCallback, &str);
+  this->GetMultiThreader()->SetNumberOfWorkUnits( this->GetNumberOfWorkUnits() );
+  const ThreadIdType  total = this->GetRegionSplitter()->GetNumberOfSplits( m_CurrentInputRegion,  this->GetNumberOfWorkUnits() );
 
-  // multithread the execution
-  this->GetMultiThreader()->SingleMethodExecute();
-
-}
-
-
-template <class TInputImage>
-ITK_THREAD_RETURN_TYPE
-ImageSinc<TInputImage>
-::ThreaderCallback(void *arg)
-{
-  ThreadStruct *str;
-
-  const ThreadIdType threadId = ( (MultiThreaderBase::ThreadInfoStruct *)( arg ) )->ThreadID;
-  const ThreadIdType  threadCount = ( (MultiThreaderBase::ThreadInfoStruct *)( arg ) )->NumberOfThreads;
-
-  str = (ThreadStruct *)( ( (MultiThreaderBase::ThreadInfoStruct *)( arg ) )->UserData );
-
-  const ThreadIdType  total = str->Filter->GetRegionSplitter()->GetNumberOfSplits( str->currentInputRegion,  threadCount );
-
-  if ( threadId < total )
+  this->GetMultiThreader()->ParallelizeArray(
+    0,
+    total,
+    [this, total](SizeValueType threadId)
     {
-    // execute the actual method with appropriate region
-    // first find out how many pieces extent can be split into.
-    InputImageRegionType splitRegion = str->currentInputRegion;
-
-    str->Filter->GetRegionSplitter()->GetSplit( threadId, total, splitRegion );
-
-    str->Filter->ThreadedStreamedGenerateData(splitRegion, threadId);
-    }
-  // else
-  //   {
-  //   otherwise don't use this thread. Sometimes the threads dont
-  //   break up very well and it is just as efficient to leave a
-  //   few threads idle.
-  //   }
-
-  return ITK_THREAD_RETURN_DEFAULT_VALUE;
+        InputImageRegionType splitRegion = this->m_CurrentInputRegion;
+        this->GetRegionSplitter()->GetSplit( threadId, total, splitRegion );
+        this->ThreadedStreamedGenerateData(splitRegion, threadId);
+    },
+    nullptr); // \Modules\Core\Common\include\itkProgressTransformer.h would need to be used to properly report progress here
 }
 
 }
