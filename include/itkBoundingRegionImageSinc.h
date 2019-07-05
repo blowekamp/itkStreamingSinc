@@ -18,11 +18,11 @@
 #ifndef itkBoundingRegionImageSinc_h
 #define itkBoundingRegionImageSinc_h
 
-#include "itkImageSinc.h"
+#include "itkImageSink.h"
 #include "itkImageScanlineIterator.h"
 #include "itkSimpleDataObjectDecorator.h"
-#include "itkProgressReporter.h"
 #include <numeric>
+#include <mutex>
 
 namespace itk
 {
@@ -33,12 +33,12 @@ namespace itk
  **/
 template< class TInputImage >
 class BoundingRegionImageSinc
-  : public ImageSinc<TInputImage>
+  : public ImageSink<TInputImage>
 {
 public:
   /** Standard class typedefs. */
   typedef BoundingRegionImageSinc     Self;
-  typedef ImageSinc< TInputImage >    Superclass;
+  typedef ImageSink< TInputImage >    Superclass;
   typedef SmartPointer< Self >        Pointer;
   typedef SmartPointer< const Self >  ConstPointer;
 
@@ -98,7 +98,7 @@ public:
     }
 
   using Superclass::MakeOutput;
-  DataObject::Pointer MakeOutput(typename Superclass::DataObjectPointerArraySizeType  output)
+  DataObject::Pointer MakeOutput(typename Superclass::DataObjectPointerArraySizeType  output) override
     {
       switch ( output )
         {
@@ -126,12 +126,7 @@ protected:
     }
 
 
-  virtual void BeforeStreamedGenerateData( void ) ITK_OVERRIDE
-    {
-      this->m_ThreadRegions.resize(this->GetNumberOfWorkUnits());
-    }
-
-  virtual void ThreadedStreamedGenerateData(const RegionType &inputRegionForChunk, ThreadIdType threadId) ITK_OVERRIDE
+  void ThreadedStreamedGenerateData(const RegionType &inputRegionForChunk) override
     {
 
       typedef ImageScanlineConstIterator< TInputImage > InputConstIteratorType;
@@ -141,8 +136,6 @@ protected:
                                                              regionSize.GetSize()+TInputImage::ImageDimension,
                                                              size_t(1),
                                                              std::multiplies<size_t>() );
-
-      ProgressReporter progress( this, threadId, numberOfLinesToProcess );
 
 
       const InputImageType *inputPtr = this->GetInput();
@@ -196,7 +189,6 @@ protected:
           }
 
         inputIt.NextLine();
-        progress.CompletedPixel();  // potential exception thrown here
         }
 
       RegionType r;
@@ -213,24 +205,24 @@ protected:
           }
         }
 
-      //std::cout << "ThreadedStreamedGenerateData: " << inputRegionForChunk << " r: " << r << std::endl;
-      m_ThreadRegions[threadId] = RegionUnion(m_ThreadRegions[threadId],r);
+
+      std::lock_guard<std::mutex> mutexHolder(m_Mutex);
+      m_ThreadRegion = RegionUnion(m_ThreadRegion, r);
     }
 
-  virtual void AfterStreamedGenerateData( void ) ITK_OVERRIDE
+  void AfterStreamedGenerateData( void ) override
     {
-      for (unsigned int i = 1; i < this->GetNumberOfWorkUnits(); ++i)
-        {
-         m_ThreadRegions[0] = RegionUnion(m_ThreadRegions[0],m_ThreadRegions[i]);
-        }
-      this->GetRegionOutput()->Set(m_ThreadRegions[0]);
-      m_ThreadRegions.clear();
-    }
+      this->GetRegionOutput()->Set(m_ThreadRegion);
+}
+
 
 private:
   ITK_DISALLOW_COPY_AND_ASSIGN(BoundingRegionImageSinc);
 
-  std::vector<RegionType> m_ThreadRegions;
+  RegionType m_ThreadRegion;
+
+
+  std::mutex m_Mutex;
 };
 
 } // end namespace itk
