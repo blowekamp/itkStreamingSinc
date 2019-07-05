@@ -1,5 +1,13 @@
-Streaming Sinc Filter Collection
+Streaming Sink Filter Collection
 ================================
+
+
+
+ITKv5 incorporated many features originating from this module. The
+ImageSink and StreamingProcess object are now in upstream ITK. The
+streaming feature for the StatisticsImageFilter, the
+LabelStatisticsImageFilter and other filters has been incorporated into
+ITKv5.
 
 
 General
@@ -9,9 +17,7 @@ This repository contains an `ITK: The Insight Toolkit for Segmentation and Regis
 with advanced classes for image streaming and MPI distributed image processing through streaming.  It is designed
 to work with the ITKv4 modular system by being placed in the ITK source code.
 
-Filters such at StreamingLabelStatisticsImageFilter can compute statistics about segmented or labeled image, by only
-using a fraction of the image at one time. So a pipeline can be constructed with a streaming image reader which computes
-statistics about an image with out-of-core methods.
+This module has a BoundingBoxImageSic filter and a MPIStreamingImageFilter.
 
 Getting Started
 ---------------
